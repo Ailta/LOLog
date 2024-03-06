@@ -15,6 +15,29 @@ function App() {
 		.then((data) => setMessage(data.message))
 		.catch((error) => console.error('Error fetching data:', error));
   }
+  
+  function logIn(){
+	const text = document.getElementById('text');
+	const username = document.getElementById('username').value;
+	const password = document.getElementById('password').value;
+  
+	let data = { 'username': username, 'password': password};
+  
+	fetch('/logIn', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({data})
+	})
+	.then((response) => response.json())
+	.then((data) => {
+		if (data.success){
+			text.innerHTML = 'Yaaay.';
+		}
+	})
+	.catch((error) => console.error('Error fetching data:', error));
+  }
 
 
   useEffect(() => {
@@ -29,14 +52,12 @@ function App() {
     <div className="App">
       <header className="App-header">
 		<div id="logInForm" style={{backgroundColor: '#202329', marginRight: '0px', paddingRight: '15px', paddingLeft: '15px', paddingBottom: '10px'}}>
-			<p style={{marginTop: '0px', marginBottom: '0px'}}>LogIn</p>
-			<form action="/logIn" method="post">
-				<input type="text" id="username" name="username" placeholder="Username" required />
-				<br/>
-				<input type="password" id="password" name="password" placeholder="Password" required />
-				<br/>
-				<input type="submit" value="Submit" />
-			</form>
+			<p style={{marginTop: '0px', marginBottom: '0px'}} id="text">LogIn</p>
+			<input type="text" id="username" name="username" placeholder="Username" required />
+			<br/>
+			<input type="password" id="password" name="password" placeholder="Password" required />
+			<br/>
+			<button onClick={logIn}>Sumbit</button>
 		</div>
       </header>
     </div>

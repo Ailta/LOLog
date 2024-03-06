@@ -10,31 +10,30 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Handle requests to the root URL
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+	res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // A simple endpoint that responds with 'Hello'
 app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from the server!' });
+	res.json({ message: 'Hello from the server!' });
 });
 
 app.get('/api/helloo', (req, res) => {
-  res.json({ message: 'Hello World!' });
+	res.json({ message: 'Hello World!' });
 });
 
 // Handle form submission
 app.post('/logIn', (req, res) => {
-	console.log(req);
 	
-	const username = req.body.username;
-	const password = req.body.password;
+	const username = req.body.data.username;
+	const password = req.body.data.password;
 
 	// Do something with the form data (e.g., save to a database)
 	console.log('Username:', username);
 	console.log('Password:', password);
 
 	// Send a response
-	res.send('Form submitted successfully!');
+	res.json({ 'success': true });
 });
 
 // Start the server

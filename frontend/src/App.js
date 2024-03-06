@@ -39,7 +39,7 @@ function App() {
 		return (
 			<div className="App">
 				<header className="App-header">
-				
+					<LogIn onClick={logIn}/>
 				</header>
 			</div>
 		);
@@ -47,7 +47,7 @@ function App() {
 		return (
 			<div className="App">
 				<header className="App-header">
-					<LogIn onClick={logIn}/>
+					<ToDo/>
 				</header>
 			</div>
 		);
@@ -64,6 +64,11 @@ function LogIn({ onClick }){
 			<br/>
 			<button onClick={onClick}>Sumbit</button>
 		</div>
+	);
+}
+
+function ToDo({}){
+	return (
 	);
 }
 

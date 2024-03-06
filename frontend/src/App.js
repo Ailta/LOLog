@@ -2,33 +2,46 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-	function OnClick() {
-        setMessage(getMessage());
-        // uložit input text do databáze      
-    }
-	
-	return (
-		<div className="App">
-			<header className="App-header">
-				<button OnClick={OnClick}>You got mail.</button>
-				<p>{message}</p>
-			</header>
-		</div>
-	);
-}
+  const [message, setMessage] = useState('');
+  const [count, setCount] = useState(0);
 
-function getMessage() {
-	const [message, setMessage] = useState('');
-	
-	useEffect(() => {
-		// Fetch data from the server when the component mounts
-		fetch('/api/hello')
+  function handleClick() {
+    setCount(count + 1);
+  }
+  
+  function clicked() {
+	fetch('/api/helloo')
 		.then((response) => response.json())
 		.then((data) => setMessage(data.message))
 		.catch((error) => console.error('Error fetching data:', error));
-	}, []);
-	
-	return message;
+  }
+
+
+  useEffect(() => {
+    // Fetch data from the server when the component mounts
+    fetch('/api/hello')
+      .then((response) => response.json())
+	  .then((data) => setMessage(data.message))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <p>{message}</p>
+		<MyButton count={count} onClick={clicked}/>
+		<MyButton count={count} onClick={handleClick}/>
+      </header>
+    </div>
+  );
+}
+
+function MyButton({ count, onClick }) {
+  return (
+    <button onClick={onClick}>
+      Clicked {count} times
+    </button>
+  );
 }
 
 export default App;

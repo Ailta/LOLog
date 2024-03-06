@@ -3,6 +3,8 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
+app.use(express.urlencoded());
+app.use(express.json());
 // Serve static files from the 'build' folder
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
@@ -18,6 +20,21 @@ app.get('/api/hello', (req, res) => {
 
 app.get('/api/helloo', (req, res) => {
   res.json({ message: 'Hello World!' });
+});
+
+// Handle form submission
+app.post('/logIn', (req, res) => {
+	console.log(req);
+	
+	const username = req.body.username;
+	const password = req.body.password;
+
+	// Do something with the form data (e.g., save to a database)
+	console.log('Username:', username);
+	console.log('Password:', password);
+
+	// Send a response
+	res.send('Form submitted successfully!');
 });
 
 // Start the server

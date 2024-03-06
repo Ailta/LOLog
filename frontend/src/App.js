@@ -28,9 +28,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>{message}</p>
-		<MyButton count={count} onClick={clicked}/>
-		<MyButton count={count} onClick={handleClick}/>
+		<div id="logInForm" style={{backgroundColor: '#202329', marginRight: '0px', paddingRight: '15px', paddingLeft: '15px', paddingBottom: '10px'}}>
+			<p style={{marginTop: '0px', marginBottom: '0px'}}>LogIn</p>
+			<form action="/logIn" method="post">
+				<input type="text" id="username" name="username" placeholder="Username" required />
+				<br/>
+				<input type="password" id="password" name="password" placeholder="Password" required />
+				<br/>
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
       </header>
     </div>
   );

@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 // Handle form submission
 app.post('/logIn', (req, res) => {
 	
+	console.log(req.body.data);
+	
 	const username = req.body.data.username;
 	const password = req.body.data.password;
 

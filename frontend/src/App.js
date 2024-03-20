@@ -30,46 +30,54 @@ function App() {
 		.then((data) => {
 			if (data.success){
 				setLogedIn(true);
+				return (
+					<div className="App">
+						<header className="App-header">
+							<ToDo/>
+						</header>
+					</div>
+				);
+				console.log('success');
 			}
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 	}
 	
-	if(logedIn){
-		return (
-			<div className="App">
-				<header className="App-header">
-					<LogIn onClick={logIn}/>
-				</header>
-			</div>
-		);
+	let page;
+	if(!logedIn){
+		page = <LogIn onClick={logIn}/>;
 	} else{
-		return (
-			<div className="App">
-				<header className="App-header">
-					<ToDo/>
-				</header>
-			</div>
-		);
+		page = <ToDo />;
 	}
+	return page;
 }
 
 function LogIn({ onClick }){
 	return (
-		<div id="logInForm" style={{backgroundColor: '#202329', marginRight: '0px', paddingRight: '15px', paddingLeft: '15px', paddingBottom: '10px'}}>
-			<p style={{marginTop: '0px', marginBottom: '0px'}} id="text">LogIn</p>
-			<input type="text" id="username" name="username" placeholder="Username" required />
-			<br/>
-			<input type="password" id="password" name="password" placeholder="Password" required />
-			<br/>
-			<button onClick={onClick}>Sumbit</button>
+		<div className="App">
+			<header className="App-header">
+				<div id="logInForm" style={{backgroundColor: '#202329', marginRight: '0px', paddingRight: '15px', paddingLeft: '15px', paddingBottom: '10px'}}>
+					<p style={{marginTop: '0px', marginBottom: '0px'}} id="text">LogIn</p>
+					<input type="text" id="username" name="username" placeholder="Username" required />
+					<br/>
+					<input type="password" id="password" name="password" placeholder="Password" required />
+					<br/>
+					<button onClick={onClick}>Sumbit</button>
+				</div>
+			</header>
 		</div>
 	);
 }
 
-function ToDo({}){
+function ToDo(){
 	return (
-	<div>TaDá</div>
+		<div className="App">
+			<header className="App-header">
+				<div>
+					<p>TaDá</p>
+				</div>
+			</header>
+		</div>
 	);
 }
 

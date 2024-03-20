@@ -3,6 +3,8 @@ import './App.css';
 
 function App() {
 	const [logedIn, setLogedIn] = useState(false);
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
 	
 	//useEffect(() => {
 	//	// Fetch data from the server when the component mounts
@@ -14,10 +16,10 @@ function App() {
 	
 	function logIn(){
 		const text = document.getElementById('text');
-		const username = document.getElementById('username').value;
-		const password = document.getElementById('password').value;
+		const usernameForm = document.getElementById('username').value;
+		const passwordForm = document.getElementById('password').value;
 	
-		let data = { 'username': username, 'password': password};
+		let data = { 'username': usernameForm, 'password': passwordForm};
 	
 		fetch('/logIn', {
 			method: 'POST',
@@ -30,24 +32,26 @@ function App() {
 		.then((data) => {
 			if (data.success){
 				setLogedIn(true);
-				return (
-					<div className="App">
-						<header className="App-header">
-							<ToDo/>
-						</header>
-					</div>
-				);
 				console.log('success');
+				setUsername(usernameForm);
+				setPassword(passwordForm);
+			}
+			else{
+				console.log('failed');
 			}
 		})
 		.catch((error) => console.error('Error fetching data:', error));
+	}
+	
+	function writeUsrPass(){
+		console.log(username, password);
 	}
 	
 	let page;
 	if(!logedIn){
 		page = <LogIn onClick={logIn}/>;
 	} else{
-		page = <ToDo />;
+		page = <ToDo onClick={writeUsrPass}/>;
 	}
 	return page;
 }
@@ -62,19 +66,20 @@ function LogIn({ onClick }){
 					<br/>
 					<input type="password" id="password" name="password" placeholder="Password" required />
 					<br/>
-					<button onClick={onClick}>Sumbit</button>
+					<button onClick={onClick}>Submit</button>
 				</div>
 			</header>
 		</div>
 	);
 }
 
-function ToDo(){
+function ToDo({ onClick }){
 	return (
 		<div className="App">
 			<header className="App-header">
 				<div>
 					<p>TaDá</p>
+					<button onClick={onClick}>WriteIntoConsole</button>
 				</div>
 			</header>
 		</div>

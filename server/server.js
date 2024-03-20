@@ -3,6 +3,9 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
+const jsondb = require('simple-json-db');
+const db = new jsondb('../data/users.json');
+
 app.use(express.urlencoded());
 app.use(express.json());
 // Serve static files from the 'build' folder
@@ -24,18 +27,23 @@ app.get('/', (req, res) => {
 
 // Handle form submission
 app.post('/logIn', (req, res) => {
-	
-	console.log(req.body.data);
-	
-	const username = req.body.data.username;
-	const password = req.body.data.password;
+	const dataUsername = req.body.data.username;
+	const dataPassword = req.body.data.password;
 
 	// Do something with the form data (e.g., save to a database)
-	console.log('Username:', username);
-	console.log('Password:', password);
+	console.log('Username:', dataUsername);
+	console.log('Password:', dataPassword);
+	
+	for (let i = 0; i < db.get('next_id'); i++){
+		let user = db.get(i);
+		if (user.name == dataUsername && user.password == dataPassword){
+			res.json({ 'success': true });
+		}
+		console.log(user);
+	}
 
 	// Send a response
-	res.json({ 'success': true });
+	res.json({ 'success': false });
 });
 
 // Start the server

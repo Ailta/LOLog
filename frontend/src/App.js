@@ -70,15 +70,39 @@ function LogIn({ onClick }){
 }
 
 function ToDo(){
+	function Add() {
+		const message = document.getElementById("message").value;
+		console.log(message);
+	}
+
 	return (
 		<div className="App">
 			<header className="App-header">
 				<div>
-					<p>TaDá</p>
+					<table>
+						<tr>
+							<td><input type='text' id='message' name='message' placeholder='Zde zadeje nový úkol'/></td>
+							<td><button onClick={Add}>+</button></td>
+						</tr>
+					</table>
 				</div>
 			</header>
 		</div>
 	);
 }
+
+function MyButton() {
+	const [count, setCount] = useState(0);
+  
+	function handleClick() {
+	  setCount(count + 1);
+	}
+  
+	return (
+	  <button onClick={handleClick}>
+		Clicked {count} times
+	  </button>
+	);
+  }
 
 export default App;

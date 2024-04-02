@@ -50,8 +50,9 @@ app.post('/logIn', (req, res) => {
 app.post('/addTask', (req, res) => {
 	const dataTitle = req.body.data.title;
 	
-	tasksDB.set(tasksDB.get('next_id'),{title: dataTitle, status: 0})
-	tasksDB.set(tasksDB.get('next_id')+1);
+	let id = tasksDB.get('next_id');
+	tasksDB.set(id,{title: dataTitle, status: 0})
+	tasksDB.set(id, id+1);
 	
 	res.json({ 'success': true });
 });

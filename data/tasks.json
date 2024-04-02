@@ -4,42 +4,10 @@
             "title": "test",
             "status": 0
         },
-        "3": {
-            "title": "nenene",
+        "1": {
+            "title": "",
             "status": 0
         },
-        "4": {
-            "title": "test",
-            "status": 0
-        },
-        "5": {
-            "title": "k",
-            "status": 0
-        },
-        "6": {
-            "title": "sadas",
-            "status": 0
-        },
-        "7": {
-            "title": "asd",
-            "status": 0
-        },
-        "8": {
-            "title": "asd",
-            "status": 0
-        },
-        "9": {
-            "title": "asd",
-            "status": 0
-        },
-        "10": {
-            "title": "asd",
-            "status": 0
-        },
-        "next_id": 11,
-        "id": {
-            "title": "asdsadsad",
-            "status": 0
-        }
+        "next_id": 2
     }
 }

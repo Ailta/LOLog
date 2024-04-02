@@ -5,6 +5,7 @@ function App() {
 	const [logedIn, setLogedIn] = useState(false);
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [tasks, setTasks] = useState([]);
 	
 	//useEffect(() => {
 	//	// Fetch data from the server when the component mounts
@@ -84,10 +85,11 @@ function App() {
 		.then((data) => {
 			let dataArray = [];
 
-			for(let i = 0; i<data.next_id; i++){
+			for(let i = 0; i < data.next_id; i++){
 				dataArray.push(data[i]);
 			}
 			console.log(dataArray);
+			setTasks(dataArray);
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 	}
@@ -100,7 +102,7 @@ function App() {
 	if(!logedIn){
 		page = <LogIn onClick={logIn}/>;
 	} else{
-		page = <ToDo onClick={addTask}/>;
+		page = <ToDo onClick={addTask} tasks={tasks}/>;
 	}
 	return page;
 }
@@ -122,18 +124,16 @@ function LogIn({ onClick }){
 	);
 }
 
-function ToDo({ onClick }){
-	let listTask = dataArray.map(task =>
-		<tr key={task.id}>
-			<td>{tasks.title}</td>
-		</tr>
-		)
+function ToDo({ onClick, tasks }){
+	let listTask = tasks.map((task) =>
+		<li>{task.title}</li>
+		);
 	return (
 		<div className="App">
 			<header className="App-header">
 				<div>
 					<table>
-						{listTask}
+						<ul>{listTask}</ul>
 						<tr>
 							<td><input type='text' id='message' name='message' placeholder='Zde zadeje nový úkol'/></td>
 							<td><button onClick={onClick}>+</button></td>

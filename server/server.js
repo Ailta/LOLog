@@ -52,7 +52,7 @@ app.post('/addTask', (req, res) => {
 	
 	let id = tasksDB.get('next_id');
 	tasksDB.set(id,{title: dataTitle, status: 0})
-	tasksDB.set(id, id+1);
+	tasksDB.set('next_id', id+1);
 	
 	res.json({ 'success': true });
 });
@@ -65,6 +65,10 @@ app.post('/editTask', (req, res) => {
 	task.status = dataNewStatus;
 	
 	tasksDB.set(dataTaskID, task);
+});
+
+app.get('/getTasks', (req, res) => {
+	res.json(tasksDB.JSON());
 });
 
 // Start the server

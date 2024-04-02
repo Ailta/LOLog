@@ -54,7 +54,7 @@ app.post('/addTask', (req, res) => {
 	let userTasksDB = tasksDB.get(dataUser);
 	
 	let id = userTasksDB.next_id;
-	userTasksDB.id = {title: dataTitle, status: 0};
+	userTasksDB[id] = {title: dataTitle, status: 0};
 	userTasksDB.next_id = id+1;
 	
 	tasksDB.set(dataUser, userTasksDB);
@@ -63,6 +63,7 @@ app.post('/addTask', (req, res) => {
 });
 
 app.post('/editTask', (req, res) => {
+	const dataUser = req.body.data.user;
 	const dataTaskID = req.body.data.taskId;
 	const dataNewStatus = req.body.data.newStatus;
 	
@@ -72,8 +73,10 @@ app.post('/editTask', (req, res) => {
 	tasksDB.set(dataTaskID, task);
 });
 
-app.get('/getTasks', (req, res) => {
-	res.json(tasksDB.JSON());
+app.post('/getTasks', (req, res) => {
+	const dataUser = req.body.data.user;
+	
+	res.json(tasksDB.get(dataUser));
 });
 
 // Start the server

@@ -51,13 +51,13 @@ app.post('/addTask', (req, res) => {
 	const dataUser = req.body.data.user;
 	const dataTitle = req.body.data.title;
 	
-	let userTasksDB = tasksDB.get(dataUser);
+	let userTasks = tasksDB.get(dataUser);
 	
-	let id = userTasksDB.next_id;
-	userTasksDB[id] = {title: dataTitle, status: 0};
-	userTasksDB.next_id = id+1;
+	let id = userTasks.next_id;
+	userTasks[id] = {title: dataTitle, status: 0};
+	userTasks.next_id = id+1;
 	
-	tasksDB.set(dataUser, userTasksDB);
+	tasksDB.set(dataUser, userTasks);
 	
 	res.json({ 'success': true });
 });
@@ -77,6 +77,29 @@ app.post('/getTasks', (req, res) => {
 	const dataUser = req.body.data.user;
 	
 	res.json(tasksDB.get(dataUser));
+});
+
+app.post('/removeTask', (req, res) => {
+	const dataUser = req.body.data.user;
+	const dataTaskID = req.body.data.taskId;
+	
+	let userTasks = tasksDB.get(dataUser);
+	
+	delete userTasks[dataTaskId];
+	
+	for (let i = userTasks; i < userTasks['next_id']; i++){
+		if (i+1 == userTasks['next_id']){
+			delete userTasks[i];
+			userTasks['next_id'] += -1;
+			continue;
+		}
+		
+		userTasks[i] = userTasks[i+1];
+	}
+	
+	console.log(tasksDB.get(dataUser))
+	
+	res.json({ 'success': true });
 });
 
 // Start the server

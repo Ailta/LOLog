@@ -48,11 +48,16 @@ app.post('/logIn', (req, res) => {
 });
 
 app.post('/addTask', (req, res) => {
+	const dataUser = req.body.data.user;
 	const dataTitle = req.body.data.title;
 	
-	let id = tasksDB.get('next_id');
-	tasksDB.set(id,{title: dataTitle, status: 0})
-	tasksDB.set('next_id', id+1);
+	let userTasksDB = tasksDB.get(dataUser);
+	
+	let id = userTasksDB.next_id;
+	userTasksDB.id = {title: dataTitle, status: 0};
+	userTasksDB.next_id = id+1;
+	
+	tasksDB.set(dataUser, userTasksDB);
 	
 	res.json({ 'success': true });
 });

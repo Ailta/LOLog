@@ -47,7 +47,7 @@ function App() {
 	
 		console.log(message);
 
-		let data = { 'title': message};
+		let data = { 'user': username, 'title': message};
 	
 		fetch('/addTask', {
 			method: 'POST',
@@ -60,11 +60,34 @@ function App() {
 		.then((data) => {
 			if (data.success){
 				console.log("zprava");
-				message = "";
+				document.getElementById("message").value = "";
+				getTasks();
 			}
 			else{
 				console.log('failed');
 			}
+		})
+		.catch((error) => console.error('Error fetching data:', error));
+	}
+	function getTasks(){
+
+		let data = { 'user': username};
+	
+		fetch('/getTasks', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({data})
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			let dataArray = [];
+
+			for(let i = 0; i<data.next_id; i++){
+				dataArray.push(data[i]);
+			}
+			console.log(dataArray);
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 	}
@@ -100,19 +123,17 @@ function LogIn({ onClick }){
 }
 
 function ToDo({ onClick }){
-
-	function Add() {
-		const message = document.getElementById("message");
-		console.log(message.value);
-	
-		message.value = "";
-	}
-
+	let listTask = dataArray.map(task =>
+		<tr key={task.id}>
+			<td>{tasks.title}</td>
+		</tr>
+		)
 	return (
 		<div className="App">
 			<header className="App-header">
 				<div>
 					<table>
+						{listTask}
 						<tr>
 							<td><input type='text' id='message' name='message' placeholder='Zde zadeje nový úkol'/></td>
 							<td><button onClick={onClick}>+</button></td>

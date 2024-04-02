@@ -47,14 +47,18 @@ app.post('/logIn', (req, res) => {
 	res.json({ 'success': false });
 });
 
-app.post('/addTask', (rq, res) => {
+app.post('/addTask', (req, res) => {
 	const dataTitle = req.body.data.title;
 	
 	tasksDB.set(tasksDB.get('next_id'),{title: dataTitle; status: 0})
 	tasksDB.set(tasksDB.get('next_id')+1);
 	
 	res.json({ 'success': true });
-})
+});
+
+app.post('/editTask', (req, res) => {
+	
+});
 
 // Start the server
 app.listen(port, () => {

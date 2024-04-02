@@ -50,14 +50,20 @@ app.post('/logIn', (req, res) => {
 app.post('/addTask', (req, res) => {
 	const dataTitle = req.body.data.title;
 	
-	tasksDB.set(tasksDB.get('next_id'),{title: dataTitle; status: 0})
+	tasksDB.set(tasksDB.get('next_id'),{title: dataTitle, status: 0})
 	tasksDB.set(tasksDB.get('next_id')+1);
 	
 	res.json({ 'success': true });
 });
 
 app.post('/editTask', (req, res) => {
+	const dataTaskID = req.body.data.taskId;
+	const dataNewStatus = req.body.data.newStatus;
 	
+	let task = tasksDB.get(dataTaskID);
+	task.status = dataNewStatus;
+	
+	tasksDB.set(dataTaskID, task);
 });
 
 // Start the server

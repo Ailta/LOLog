@@ -5,6 +5,7 @@ const port = 8080;
 
 const jsondb = require('simple-json-db');
 const db = new jsondb('../data/users.json');
+const tasksDB = new jsondb('../data/tasks.json');
 
 app.use(express.urlencoded());
 app.use(express.json());
@@ -45,6 +46,15 @@ app.post('/logIn', (req, res) => {
 	// Send a response
 	res.json({ 'success': false });
 });
+
+app.post('/addTask', (rq, res) => {
+	const dataTitle = req.body.data.title;
+	
+	tasksDB.set(tasksDB.get('next_id'),{title: dataTitle; status: 0})
+	tasksDB.set(tasksDB.get('next_id')+1);
+	
+	res.json({ 'success': true });
+})
 
 // Start the server
 app.listen(port, () => {

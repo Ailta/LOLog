@@ -15,7 +15,6 @@ function App() {
 	//}, []);
 	
 	function logIn(){
-		const text = document.getElementById('text');
 		const usernameForm = document.getElementById('username').value;
 		const passwordForm = document.getElementById('password').value;
 	
@@ -42,6 +41,33 @@ function App() {
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 	}
+
+	function addTask(){
+		let message = document.getElementById("message").value;
+	
+		console.log(message);
+
+		let data = { 'title': message};
+	
+		fetch('/addTask', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({data})
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.success){
+				console.log("zprava");
+				message = "";
+			}
+			else{
+				console.log('failed');
+			}
+		})
+		.catch((error) => console.error('Error fetching data:', error));
+	}
 	
 	function writeUsrPass(){
 		console.log(username, password);
@@ -51,7 +77,7 @@ function App() {
 	if(!logedIn){
 		page = <LogIn onClick={logIn}/>;
 	} else{
-		page = <ToDo onClick={writeUsrPass}/>;
+		page = <ToDo onClick={addTask}/>;
 	}
 	return page;
 }
@@ -74,9 +100,12 @@ function LogIn({ onClick }){
 }
 
 function ToDo({ onClick }){
+
 	function Add() {
-		const message = document.getElementById("message").value;
-		console.log(message);
+		const message = document.getElementById("message");
+		console.log(message.value);
+	
+		message.value = "";
 	}
 
 	return (
@@ -86,28 +115,13 @@ function ToDo({ onClick }){
 					<table>
 						<tr>
 							<td><input type='text' id='message' name='message' placeholder='Zde zadeje nový úkol'/></td>
-							<td><button onClick={Add}>+</button></td>
+							<td><button onClick={onClick}>+</button></td>
 						</tr>
 					</table>
-					<button onClick={onClick}>WriteIntoConsole</button>
 				</div>
 			</header>
 		</div>
 	);
 }
-
-function MyButton() {
-	const [count, setCount] = useState(0);
-  
-	function handleClick() {
-	  setCount(count + 1);
-	}
-  
-	return (
-	  <button onClick={handleClick}>
-		Clicked {count} times
-	  </button>
-	);
-  }
 
 export default App;

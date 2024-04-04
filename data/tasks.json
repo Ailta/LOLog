@@ -4,18 +4,6 @@
             "title": "test",
             "status": 0
         },
-        "1": {
-            "title": "",
-            "status": 0
-        },
-        "2": {
-            "title": "asd",
-            "status": 0
-        },
-        "3": {
-            "title": "12",
-            "status": 0
-        },
-        "next_id": 4
+        "next_id": 7
     }
 }

@@ -94,6 +94,31 @@ function App() {
 		.catch((error) => console.error('Error fetching data:', error));
 	}
 	
+	function Status(stat, id){
+		
+		let data = { 'user': username, 'taskId': id, 'netStatus': stat};
+	
+		fetch('/getTasks', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({data})
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			let dataArray = [];
+
+			for(let i = 0; i < data.next_id; i++){
+				dataArray.push(data[i]);
+			}
+			console.log(dataArray);
+			setTasks(dataArray);
+		})
+		.catch((error) => console.error('Error fetching data:', error));
+		
+	}
+	
 	function writeUsrPass(){
 		console.log(username, password);
 	}
@@ -102,7 +127,7 @@ function App() {
 	if(!logedIn){
 		page = <LogIn onClick={logIn}/>;
 	} else{
-		page = <ToDo onClick={addTask} tasks={tasks}/>;
+		page = <ToDo onClick={addTask} tasks={tasks} Status={writeUsrPass} Delete={writeUsrPass}/>;
 	}
 	return page;
 }
@@ -124,9 +149,13 @@ function LogIn({ onClick }){
 	);
 }
 
-function ToDo({ onClick, tasks }){
+function ToDo({ onClick, tasks, Status, Delete }){
 	let listTask = tasks.map((task) =>
-		<tr>{task.title}</tr>
+		<tr>{task.title}
+		<button onClick={Status}>Complete</button>
+		<button onClick={Status}>Doing</button>
+		<button onClick={Delete}>Delete</button>
+		</tr>
 		);
 	return (
 		<div className="App">

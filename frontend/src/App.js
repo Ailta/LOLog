@@ -126,14 +126,14 @@ function LogIn({ onClick }){
 
 function ToDo({ onClick, tasks }){
 	let listTask = tasks.map((task) =>
-		<li>{task.title}</li>
+		<tr>{task.title}</tr>
 		);
 	return (
 		<div className="App">
 			<header className="App-header">
 				<div>
 					<table>
-						<ul>{listTask}</ul>
+						<td>{listTask}</td>
 						<tr>
 							<td><input type='text' id='message' name='message' placeholder='Zde zadeje nový úkol'/></td>
 							<td><button onClick={onClick}>+</button></td>
